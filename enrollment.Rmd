@@ -1,0 +1,36 @@
+---
+title: "enrollment"
+author: "Matej Cerman"
+date: "18 2 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(reprex)
+```
+
+```{r}
+enrollment <- read_excel("class_enrollment_summary_by_term2.18.20.xlsx", skip = 3, na = c("")) %>%
+  clean_names() %>%
+  filter(!is.na(course_name))
+```
+
+```{}
+depts <- enrollment %>%
+  group_by(course_department) %>%
+  summarize(enrollment = sum(total)) %>%
+  arrange(desc(enrollment)) %>%
+  slice(2:6)
+  
+top_courses <- enrollment %>%
+  filter(course_department == depts$course_department) %>%
+  group_by
+```
+
